@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>todo</title>
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    </head>
+    <body>
+    	<form action="<?=sprintf('/todo/%s/edit', $todo['id']);?>" method="post"> 
+			<h1>Область редактирования информации о задании</h1>
+			<div class="myWidthForInput form-group">
+				<label for="user_name">Введите имя</label>
+				<input type="text" name="user_name" value="<?php echo $todo['name'];?>" class="form-control">
+			</div>
+			<div class="myWidthForInput form-group">
+				<label for="user_last_name">Введите фамилию</label>
+				<input type="text" name="user_last_name" value="<?php echo $todo['lastName'];?>" class="form-control">
+			</div>
+			<div class="myWidthForInput form-group">
+				<label for="user_task">Введите краткое описание задания</label>
+				<textarea type="text" name="user_task" class="form-control"><?php echo $todo['task'];?></textarea>
+			</div>
+			<div class="form-check">
+				<?php if($todo['done'] ==1):?>
+					<td><input type="checkbox" name="user_done" checked>Задание выполнено?</td>
+					<?php else:?>
+					<td><input type="checkbox" name="user_done">Задание выполнено?</td>
+				<?php endif;?>
+			</div>
+			<input type="submit" name="submit" value="Save changes" class="btn btn-primary"> 
+		</form>
+
+		
+    </body>
+</html>    

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>todo</title>
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    </head>
+    <body>
+    	<div class="btn-group btn-group-justified">
+			<a href="http://host1.local/todolist" class="btn btn-primary">Home</a>
+			<a href="#" class="btn btn-primary">Your username:
+				<?php echo $_SESSION['login'];?></a>
+			<a href="http://host1.local/logout" class="btn btn-primary">LogOut</a>
+		</div>
+    	<form action="/todolist" method="post">
+			<h2>Добавить задание в список</h2>
+			<div class="myWidthForInput marginForInput form-group">
+				<label for="user_name">Введите имя</label>
+				<input type="text" name="user_name" placeholder="type name" class="form-control" required>
+			</div>
+			<div class="myWidthForInput marginForInput form-group">
+				<label for="user_last_name">Введите Фамилию</label>
+				<input type="text" name="user_last_name" placeholder="type last name" class="form-control">
+			</div>
+			<div class="myWidthForInput marginForInput form-group">
+				<label for="task">Введите краткое описание задания</label>
+				<input type="text" name="task" placeholder="short description task" class="form-control">
+			</div>
+			<input type="checkbox" name="done">Задание выполнено?<br>
+			<input type="submit" name="submit" value="Save the task to the list" class="btn btn-primary marginForInput"> 
+		</form>
+
+		<h1>Список заданий</h1>
+		<table border="1" class="myWidth table table-striped">
+			<tr>
+				<th>№</th>
+				<th>Имя</th>
+				<th>Фамилия</th>
+				<th>Задание</th>
+				<th colspan="2">Действие</th>
+				<th>Отметка о выполнении</th>
+			</tr>
+			<?php $k = 1; ?>
+			<?php foreach ($todo_items as $row):?>
+			<tr>
+				<td><?php echo $k++; ?></td>
+				<?php if($row['done'] == 1):?>
+					<td><strike><?php echo $row['name'];?></strike></td>
+					<td><strike><?php echo $row['lastName'];?></strike></td>
+					<td><?php echo $row['task'];?></td>
+				<?php endif;?>
+				<?php if($row['done'] == 0):?>
+					<td><?php echo $row['name'];?></td>
+					<td><?php echo $row['lastName'];?></td>
+					<td><?php echo $row['task'];?></td>
+				<?php endif;?>
+				<td><?php echo sprintf('<a href="/todo/%s/delete">delete</a><br>',$row['id']);?></td>
+				<td><?php echo sprintf('<a href="/todo/%s/edit">edit</a><br>', $row['id']);?></td>
+				<?php if($row['done'] == 1):?>
+					<td><input type="checkbox" name="done" checked>done</td>
+				<?php else:?>
+					<td><p>задание не выполнено</p></td>
+				<?php endif;?>
+			</tr>
+			<?php endforeach;?>
+		</table>
+    </body>
+</html>
